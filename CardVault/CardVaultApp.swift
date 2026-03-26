@@ -10,11 +10,18 @@ import SwiftData
 
 @main
 struct CardVaultApp: App {
+    @State private var appState = AppState()
+
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            CreditCard.self,
+            SecurityEvent.self,
+            SpendingCategory.self,
         ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(
+            schema: schema,
+            isStoredInMemoryOnly: false
+        )
 
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -25,8 +32,22 @@ struct CardVaultApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Group {
+                if appState.isAuthenticated {
+                    MainTabView()
+                } else {
+                    LockScreenView()
+                }
+            }
+            .environment(appState)
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase == .background {
+                    appState.lock()
+                }
+            }
         }
         .modelContainer(sharedModelContainer)
     }
+
+    @Environment(\.scenePhase) private var scenePhase
 }
