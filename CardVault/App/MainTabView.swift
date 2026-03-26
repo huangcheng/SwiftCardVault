@@ -22,7 +22,7 @@ struct MainTabView: View {
     private var iOSTabView: some View {
         @Bindable var state = appState
         TabView(selection: $state.selectedTab) {
-            VaultPlaceholderView()
+            VaultView()
                 .tabItem {
                     Label(Tab.vault.label, systemImage: Tab.vault.sfSymbol)
                 }
@@ -70,7 +70,7 @@ struct MainTabView: View {
         } detail: {
             switch appState.selectedTab {
             case .vault:
-                VaultPlaceholderView()
+                VaultView()
             case .manage:
                 ManagePlaceholderView()
             case .profile:

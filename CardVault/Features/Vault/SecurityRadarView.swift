@@ -1,0 +1,105 @@
+//
+//  SecurityRadarView.swift
+//  CardVault
+//
+
+import SwiftUI
+
+struct SecurityRadarView: View {
+    let events: [SecurityEvent]
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text(String(localized: "Recent Security Events"))
+                .font(.headlineSM)
+                .foregroundStyle(Color.onSurface)
+
+            if events.isEmpty {
+                HStack {
+                    Spacer()
+                    VStack(spacing: 8) {
+                        Image(systemName: "checkmark.shield")
+                            .font(.title)
+                            .foregroundStyle(Color.primaryToken)
+                        Text(String(localized: "No recent events"))
+                            .font(.bodyMD)
+                            .foregroundStyle(Color.onSurfaceVariant)
+                    }
+                    .padding(.vertical, 24)
+                    Spacer()
+                }
+            } else {
+                VStack(spacing: 2) {
+                    ForEach(events) { event in
+                        SecurityEventRow(event: event)
+                    }
+                }
+            }
+        }
+        .padding(20)
+        .background(Color.surfaceContainerLow)
+        .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+    }
+}
+
+struct SecurityEventRow: View {
+    let event: SecurityEvent
+
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: iconForEventType(event.eventType))
+                .font(.body)
+                .foregroundStyle(colorForRiskLevel(event.riskLevel))
+                .frame(width: 32, height: 32)
+                .background(colorForRiskLevel(event.riskLevel).opacity(0.1))
+                .clipShape(Circle())
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(event.eventDescription)
+                    .font(.bodyMD)
+                    .foregroundStyle(Color.onSurface)
+                    .lineLimit(1)
+
+                HStack(spacing: 4) {
+                    if let location = event.location {
+                        Text(location)
+                            .font(.labelSM)
+                            .foregroundStyle(Color.onSurfaceVariant)
+                        Text("•")
+                            .font(.labelSM)
+                            .foregroundStyle(Color.onSurfaceVariant)
+                    }
+                    Text(event.timestamp, style: .relative)
+                        .font(.labelSM)
+                        .foregroundStyle(Color.onSurfaceVariant)
+                }
+            }
+
+            Spacer()
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 4)
+    }
+
+    nonisolated private func iconForEventType(_ type: SecurityEventType) -> String {
+        switch type {
+        case .loginDetected: "person.badge.shield.checkmark"
+        case .encryptionUpdated: "lock.rotation"
+        case .biometricChanged: "faceid"
+        case .cardAdded: "plus.circle"
+        case .cardDeleted: "minus.circle"
+        case .cardLocked: "lock"
+        case .cardUnlocked: "lock.open"
+        case .exportPerformed: "square.and.arrow.up"
+        case .importPerformed: "square.and.arrow.down"
+        }
+    }
+
+    private func colorForRiskLevel(_ level: RiskLevel) -> Color {
+        switch level {
+        case .low: Color.primaryToken
+        case .medium: Color.tertiaryContainer
+        case .high: Color.errorToken
+        }
+    }
+}
