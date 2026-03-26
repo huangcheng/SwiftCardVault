@@ -83,11 +83,12 @@ struct VaultView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     TotalWealthCard(totalBalance: totalBalance, isCompact: false)
 
-                    // Side-by-side cards
+                    // Side-by-side cards + add card tile
                     HStack(spacing: 16) {
                         ForEach(cards.prefix(2)) { card in
                             CardStackItem(card: card, isSelected: false)
                         }
+                        AddCardTile()
                     }
                 }
                 .frame(maxWidth: .infinity)
