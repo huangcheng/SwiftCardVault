@@ -69,7 +69,7 @@ struct VaultView: View {
     }
     #endif
 
-    // MARK: - macOS Layout (matches Stitch Desktop Dark comp)
+    // MARK: - macOS Layout (matches Stitch Desktop Light comp)
 
     #if os(macOS)
     @ViewBuilder
@@ -77,35 +77,48 @@ struct VaultView: View {
         if cards.isEmpty {
             VaultEmptyStateView()
         } else {
-            // Row 1: Total value + cards (left ~60%) | Integrity score (right ~40%)
-            HStack(alignment: .top, spacing: 20) {
-                // Left column: value + cards
-                VStack(alignment: .leading, spacing: 20) {
-                    TotalWealthCard(totalBalance: totalBalance, isCompact: false)
+            // Row 1: "Digital Assets" heading (left) | Total value pill (right)
+            TotalWealthCard(totalBalance: totalBalance, isCompact: false)
+                .padding(.horizontal, 32)
 
-                    // Side-by-side cards + add card tile
-                    HStack(spacing: 16) {
-                        ForEach(cards.prefix(2)) { card in
-                            CardStackItem(card: card, isSelected: false)
-                        }
-                        AddCardTile()
+            // Row 2: "Active Vault Cards" label + cards
+            VStack(alignment: .leading, spacing: 14) {
+                HStack {
+                    Text(String(localized: "Active Vault Cards"))
+                        .font(.titleMD)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.onSurface)
+                    Spacer()
+                    Button {
+                        // View all — future implementation
+                    } label: {
+                        Text(String(localized: "View All"))
+                            .font(.labelSM)
+                            .fontWeight(.medium)
+                            .foregroundStyle(Color.primaryToken)
                     }
+                    .buttonStyle(.plain)
                 }
-                .frame(maxWidth: .infinity)
 
-                // Right column: integrity score + quick actions
-                VaultIntegrityView(cards: cards)
-                    .frame(width: 260)
+                HStack(spacing: 16) {
+                    ForEach(cards.prefix(2)) { card in
+                        CardStackItem(card: card, isSelected: false)
+                    }
+                    AddCardTile()
+                }
             }
             .padding(.horizontal, 32)
 
-            // Row 2: Vault Stream (left) | Composition + Security (right)
+            // Row 3: Security Events (left ~60%) | Quick Controls (right ~40%)
             HStack(alignment: .top, spacing: 20) {
-                VaultStreamView(events: Array(securityEvents.prefix(5)))
+                SecurityRadarView(events: Array(securityEvents.prefix(5)))
                     .frame(maxWidth: .infinity)
 
-                VaultCompositionView()
-                    .frame(width: 260)
+                VStack(spacing: 16) {
+                    QuickControlsView()
+                    VaultIntegrityView(cards: cards)
+                }
+                .frame(width: 260)
             }
             .padding(.horizontal, 32)
         }

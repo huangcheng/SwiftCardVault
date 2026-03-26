@@ -24,7 +24,7 @@ struct TotalWealthCard: View {
         }
     }
 
-    // MARK: - iOS compact (centered, in a card)
+    // MARK: - iOS compact (centered)
     @ViewBuilder
     private var compactLayout: some View {
         VStack(spacing: 4) {
@@ -47,32 +47,49 @@ struct TotalWealthCard: View {
         .frame(maxWidth: .infinity)
     }
 
-    // MARK: - macOS desktop (left-aligned, no card background)
+    // MARK: - macOS desktop: heading left, value pill right
     @ViewBuilder
     private var desktopLayout: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(String(localized: "TOTAL SECURED VALUE"))
-                .font(.system(size: 10, weight: .semibold))
-                .foregroundStyle(Color.onSurfaceVariant)
-                .tracking(2)
-
-            HStack(alignment: .firstTextBaseline, spacing: 16) {
-                Text(totalBalance, format: .currency(code: "USD"))
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
+        HStack(alignment: .top) {
+            // Left: heading + subtitle
+            VStack(alignment: .leading, spacing: 6) {
+                Text(String(localized: "Digital Assets"))
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(Color.onSurface)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
 
-                HStack(spacing: 4) {
+                Text(String(localized: "Monitoring \(max(1, Int(truncating: totalBalance as NSDecimalNumber) / 15000)) active cards across secure vaults"))
+                    .font(.bodyMD)
+                    .foregroundStyle(Color.onSurfaceVariant)
+            }
+
+            Spacer()
+
+            // Right: total value pill
+            HStack(spacing: 10) {
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(String(localized: "TOTAL WEALTH"))
+                        .font(.system(size: 8, weight: .semibold))
+                        .foregroundStyle(Color.onSurfaceVariant)
+                        .tracking(1)
+
+                    Text(totalBalance, format: .currency(code: "USD"))
+                        .font(.system(size: 24, weight: .bold, design: .rounded))
+                        .foregroundStyle(Color.onSurface)
+                }
+
+                HStack(spacing: 2) {
                     Image(systemName: "arrow.up.right")
-                        .font(.system(size: 11, weight: .semibold))
-                    Text("\(growthPercentage, specifier: "%.1f")%")
+                        .font(.system(size: 9, weight: .bold))
+                    Text("\(growthPercentage, specifier: "%.0f")%")
                         .font(.labelSM)
-                        .fontWeight(.semibold)
+                        .fontWeight(.bold)
                 }
                 .foregroundStyle(Color.primaryToken)
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 14)
+            .background(Color.surfaceContainerLow)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

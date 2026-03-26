@@ -8,11 +8,31 @@ import SwiftUI
 struct SecurityRadarView: View {
     let events: [SecurityEvent]
 
+    private var alertCount: Int {
+        events.filter { $0.riskLevel == .medium || $0.riskLevel == .high }.count
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text(String(localized: "Recent Security Events"))
-                .font(.headlineSM)
-                .foregroundStyle(Color.onSurface)
+            // Header with alert count badge
+            HStack {
+                Text(String(localized: "Recent Security Events"))
+                    .font(.headlineSM)
+                    .foregroundStyle(Color.onSurface)
+
+                Spacer()
+
+                if alertCount > 0 {
+                    Text("\(alertCount) Alerts")
+                        .font(.labelSM)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(Color.errorToken)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 4)
+                        .background(Color.errorToken.opacity(0.12))
+                        .clipShape(Capsule())
+                }
+            }
 
             if events.isEmpty {
                 HStack {
@@ -47,35 +67,40 @@ struct SecurityEventRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
+            // Icon circle
             Image(systemName: iconForEventType(event.eventType))
                 .font(.body)
                 .foregroundStyle(colorForRiskLevel(event.riskLevel))
-                .frame(width: 32, height: 32)
+                .frame(width: 36, height: 36)
                 .background(colorForRiskLevel(event.riskLevel).opacity(0.1))
                 .clipShape(Circle())
 
+            // Content
             VStack(alignment: .leading, spacing: 2) {
                 Text(event.eventDescription)
                     .font(.bodyMD)
+                    .fontWeight(.medium)
                     .foregroundStyle(Color.onSurface)
                     .lineLimit(1)
 
                 HStack(spacing: 4) {
                     if let location = event.location {
                         Text(location)
-                            .font(.labelSM)
-                            .foregroundStyle(Color.onSurfaceVariant)
                         Text("•")
-                            .font(.labelSM)
-                            .foregroundStyle(Color.onSurfaceVariant)
                     }
                     Text(event.timestamp, style: .relative)
-                        .font(.labelSM)
-                        .foregroundStyle(Color.onSurfaceVariant)
                 }
+                .font(.labelSM)
+                .foregroundStyle(Color.onSurfaceVariant)
             }
 
             Spacer()
+
+            // Status label
+            Text(statusLabel(for: event.riskLevel))
+                .font(.system(size: 9, weight: .bold))
+                .tracking(0.5)
+                .foregroundStyle(colorForRiskLevel(event.riskLevel))
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 4)
@@ -100,6 +125,14 @@ struct SecurityEventRow: View {
         case .low: Color.primaryToken
         case .medium: Color.tertiaryContainer
         case .high: Color.errorToken
+        }
+    }
+
+    private func statusLabel(for level: RiskLevel) -> String {
+        switch level {
+        case .low: String(localized: "SYSTEM")
+        case .medium: String(localized: "ALERT")
+        case .high: String(localized: "HIGH RISK")
         }
     }
 }

@@ -27,7 +27,7 @@ struct VaultIntegrityView: View {
     }
 
     private var statusLabel: String {
-        if score >= 90 { return String(localized: "OPTIMAL") }
+        if score >= 90 { return String(localized: "Optimal") }
         if score >= 70 { return String(localized: "Good") }
         return String(localized: "At Risk")
     }
@@ -39,79 +39,42 @@ struct VaultIntegrityView: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            Text(String(localized: "VAULT INTEGRITY SCORE"))
-                .font(.labelSM)
-                .fontWeight(.semibold)
-                .foregroundStyle(Color.onSurfaceVariant)
-                .tracking(1.5)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text(String(localized: "Vault Integrity"))
+                    .font(.titleMD)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(Color.onSurface)
 
-            // Circular score ring
-            ZStack {
-                Circle()
-                    .stroke(Color.surfaceContainerHigh, lineWidth: 6)
-                    .frame(width: 100, height: 100)
+                Spacer()
 
-                Circle()
-                    .trim(from: 0, to: Double(score) / 100.0)
-                    .stroke(statusColor, style: StrokeStyle(lineWidth: 6, lineCap: .round))
-                    .frame(width: 100, height: 100)
-                    .rotationEffect(.degrees(-90))
+                Text("\(score)%")
+                    .font(.titleMD)
+                    .fontWeight(.bold)
+                    .foregroundStyle(statusColor)
+            }
 
-                VStack(spacing: 2) {
-                    Text("\(score)")
-                        .font(.system(size: 36, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color.onSurface)
-                    Text(statusLabel)
-                        .font(.system(size: 9, weight: .semibold))
-                        .foregroundStyle(statusColor)
-                        .tracking(1)
+            // Progress bar
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(Color.surfaceContainerHigh)
+                        .frame(height: 8)
+
+                    RoundedRectangle(cornerRadius: 4)
+                        .fill(statusColor)
+                        .frame(width: geometry.size.width * Double(score) / 100.0, height: 8)
                 }
             }
+            .frame(height: 8)
 
-            // Description
-            Text(String(localized: "Your security profile is stronger than 98% of users. 2-FA and hardware key active."))
+            Text(String(localized: "Your vault status is excellent. Add MFA to reach 100% protection score."))
                 .font(.labelSM)
                 .foregroundStyle(Color.onSurfaceVariant)
-                .multilineTextAlignment(.center)
-                .lineSpacing(3)
-
-            // 2x2 Quick Actions Grid
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 10),
-                GridItem(.flexible(), spacing: 10)
-            ], spacing: 10) {
-                quickAction(icon: "lock.fill", label: String(localized: "LOCK VAULT"), tint: Color.errorToken)
-                quickAction(icon: "clock.arrow.circlepath", label: String(localized: "HISTORY"), tint: Color.onSurface)
-                quickAction(icon: "checkmark.shield.fill", label: String(localized: "AUDIT"), tint: Color.primaryToken)
-                quickAction(icon: "link", label: String(localized: "LINK BANK"), tint: Color.onSurface)
-            }
+                .lineSpacing(2)
         }
-        .padding(24)
+        .padding(20)
         .background(Color.surfaceContainerLow)
-        .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
-    }
-
-    @ViewBuilder
-    private func quickAction(icon: String, label: String, tint: Color) -> some View {
-        Button {
-            // Future implementation
-        } label: {
-            VStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.title3)
-                    .foregroundStyle(tint)
-                Text(label)
-                    .font(.system(size: 8, weight: .semibold))
-                    .foregroundStyle(Color.onSurfaceVariant)
-                    .tracking(1)
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 16)
-            .background(Color.surfaceContainerHigh)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .buttonStyle(.plain)
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
