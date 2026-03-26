@@ -13,8 +13,8 @@ struct SecurityRadarView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            // Header with alert count badge
+        VStack(alignment: .leading, spacing: 14) {
+            // Header — outside the card container
             HStack {
                 Text(String(localized: "Recent Security Events"))
                     .font(.headlineSM)
@@ -34,6 +34,7 @@ struct SecurityRadarView: View {
                 }
             }
 
+            // Event rows — inside a rounded card container
             if events.isEmpty {
                 HStack {
                     Spacer()
@@ -48,17 +49,20 @@ struct SecurityRadarView: View {
                     .padding(.vertical, 24)
                     Spacer()
                 }
+                .background(Color.surfaceContainerLow)
+                .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
             } else {
-                VStack(spacing: 2) {
+                VStack(spacing: 0) {
                     ForEach(events) { event in
                         SecurityEventRow(event: event)
                     }
                 }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 16)
+                .background(Color.surfaceContainerLow)
+                .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
             }
         }
-        .padding(20)
-        .background(Color.surfaceContainerLow)
-        .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
     }
 }
 
@@ -102,7 +106,7 @@ struct SecurityEventRow: View {
                 .tracking(0.5)
                 .foregroundStyle(colorForRiskLevel(event.riskLevel))
         }
-        .padding(.vertical, 10)
+        .padding(.vertical, 12)
         .padding(.horizontal, 4)
     }
 
