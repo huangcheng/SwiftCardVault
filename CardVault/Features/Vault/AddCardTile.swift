@@ -26,7 +26,8 @@ struct AddCardTile: View {
                     .fontWeight(.medium)
                     .foregroundStyle(Color.onSurfaceVariant)
             }
-            .frame(maxWidth: .infinity, minHeight: 200)
+            .frame(maxWidth: .infinity)
+            .frame(height: 220)
             .background(Color.surfaceContainerLow.opacity(0.5))
             .overlay(
                 RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius)

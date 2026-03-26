@@ -60,7 +60,8 @@ struct CardStackItem: View {
             }
         }
         .padding(24)
-        .frame(minHeight: 200)
+        .frame(maxWidth: .infinity)
+        .frame(height: 220)
         .background(cardGradient)
         .cardShape()
         .offset(y: isSelected ? -DesignConstants.cardTranslateDistance : 0)
