@@ -1,12 +1,187 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Vault" : {
+    "/ 100 — %@" : {
+
+    },
+    "%lld" : {
+
+    },
+    "•" : {
+
+    },
+    "•••• •••• •••• %@" : {
+
+    },
+    "+%.1f%% %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "+%1$.1f%% %2$@"
+          }
+        }
+      }
+    },
+    "Add Card" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "保险柜"
+            "value" : "添加卡片"
+          }
+        }
+      }
+    },
+    "Add your first card to get started" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加您的第一张卡片开始使用"
+          }
+        }
+      }
+    },
+    "American Express" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国运通"
+          }
+        }
+      }
+    },
+    "At Risk" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "存在风险"
+          }
+        }
+      }
+    },
+    "Audit" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "审计"
+          }
+        }
+      }
+    },
+    "Authentication failed. Please try again." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "认证失败，请重试。"
+          }
+        }
+      }
+    },
+    "Card management coming soon" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "卡片管理即将推出"
+          }
+        }
+      }
+    },
+    "CardVault" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CardVault"
+          }
+        }
+      }
+    },
+    "Dashboard coming soon" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仪表盘即将推出"
+          }
+        }
+      }
+    },
+    "Discover" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discover"
+          }
+        }
+      }
+    },
+    "Due in %lld days" : {
+
+    },
+    "Export" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出"
+          }
+        }
+      }
+    },
+    "Good" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "良好"
+          }
+        }
+      }
+    },
+    "History" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史"
+          }
+        }
+      }
+    },
+    "JCB" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "JCB"
+          }
+        }
+      }
+    },
+    "Link" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "链接"
+          }
+        }
+      }
+    },
+    "Lock All" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部锁定"
           }
         }
       }
@@ -21,12 +196,92 @@
         }
       }
     },
+    "Mastercard" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "万事达"
+          }
+        }
+      }
+    },
+    "No recent activity" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无近期活动"
+          }
+        }
+      }
+    },
+    "No recent events" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无近期事件"
+          }
+        }
+      }
+    },
+    "Optimal" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最佳"
+          }
+        }
+      }
+    },
+    "Overdue" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已逾期"
+          }
+        }
+      }
+    },
+    "Paid" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已还款"
+          }
+        }
+      }
+    },
     "Profile" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "个人"
+          }
+        }
+      }
+    },
+    "Recent Security Events" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "近期安全事件"
+          }
+        }
+      }
+    },
+    "Statistics & settings coming soon" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "统计与设置即将推出"
           }
         }
       }
@@ -41,12 +296,42 @@
         }
       }
     },
-    "Your cards are secured" : {
+    "this month" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "您的卡片已安全存储"
+            "value" : "本月"
+          }
+        }
+      }
+    },
+    "Total Secured Value" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总安全价值"
+          }
+        }
+      }
+    },
+    "Total Wealth" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总资产"
+          }
+        }
+      }
+    },
+    "UnionPay" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "银联"
           }
         }
       }
@@ -71,146 +356,6 @@
         }
       }
     },
-    "Authentication failed. Please try again." : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "认证失败，请重试。"
-          }
-        }
-      }
-    },
-    "Dashboard coming soon" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "仪表盘即将推出"
-          }
-        }
-      }
-    },
-    "Card management coming soon" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "卡片管理即将推出"
-          }
-        }
-      }
-    },
-    "Statistics & settings coming soon" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "统计与设置即将推出"
-          }
-        }
-      }
-    },
-    "Visa" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visa"
-          }
-        }
-      }
-    },
-    "Mastercard" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "万事达"
-          }
-        }
-      }
-    },
-    "American Express" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "美国运通"
-          }
-        }
-      }
-    },
-    "UnionPay" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "银联"
-          }
-        }
-      }
-    },
-    "JCB" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "JCB"
-          }
-        }
-      }
-    },
-    "Discover" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Discover"
-          }
-        }
-      }
-    },
-    "CardVault" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CardVault"
-          }
-        }
-      }
-    },
-    "Total Wealth" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "总资产"
-          }
-        }
-      }
-    },
-    "Total Secured Value" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "总安全价值"
-          }
-        }
-      }
-    },
-    "this month" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "本月"
-          }
-        }
-      }
-    },
     "Updated 2m ago" : {
       "localizations" : {
         "zh-Hans" : {
@@ -221,52 +366,12 @@
         }
       }
     },
-    "Recent Security Events" : {
+    "Vault" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "近期安全事件"
-          }
-        }
-      }
-    },
-    "No recent events" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "暂无近期事件"
-          }
-        }
-      }
-    },
-    "Your vault is empty" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您的金库是空的"
-          }
-        }
-      }
-    },
-    "Add your first card to get started" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加您的第一张卡片开始使用"
-          }
-        }
-      }
-    },
-    "Add Card" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "添加卡片"
+            "value" : "保险柜"
           }
         }
       }
@@ -281,32 +386,12 @@
         }
       }
     },
-    "Optimal" : {
+    "Vault Stream" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最佳"
-          }
-        }
-      }
-    },
-    "Good" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "良好"
-          }
-        }
-      }
-    },
-    "At Risk" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "存在风险"
+            "value" : "金库动态"
           }
         }
       }
@@ -321,92 +406,35 @@
         }
       }
     },
-    "Vault Stream" : {
+    "Visa" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "金库动态"
+            "value" : "Visa"
           }
         }
       }
     },
-    "Lock All" : {
+    "Your cards are secured" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全部锁定"
+            "value" : "您的卡片已安全存储"
           }
         }
       }
     },
-    "History" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "历史"
-          }
-        }
-      }
+    "Your security profile is actively monitored. Biometric and encryption protections are in place." : {
+
     },
-    "Audit" : {
+    "Your vault is empty" : {
       "localizations" : {
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "审计"
-          }
-        }
-      }
-    },
-    "Link" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "链接"
-          }
-        }
-      }
-    },
-    "Paid" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已还款"
-          }
-        }
-      }
-    },
-    "Overdue" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已逾期"
-          }
-        }
-      }
-    },
-    "Export" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导出"
-          }
-        }
-      }
-    },
-    "No recent activity" : {
-      "localizations" : {
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "暂无近期活动"
+            "value" : "您的金库是空的"
           }
         }
       }

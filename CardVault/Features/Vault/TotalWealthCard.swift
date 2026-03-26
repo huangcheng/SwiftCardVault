@@ -10,19 +10,28 @@ struct TotalWealthCard: View {
     let growthPercentage: Double
     let isCompact: Bool
 
-    init(totalBalance: Decimal, growthPercentage: Double = 2.4, isCompact: Bool = true) {
+    init(totalBalance: Decimal, growthPercentage: Double = 4.2, isCompact: Bool = true) {
         self.totalBalance = totalBalance
         self.growthPercentage = growthPercentage
         self.isCompact = isCompact
     }
 
     var body: some View {
-        VStack(alignment: isCompact ? .center : .leading, spacing: 8) {
-            Text(isCompact ? String(localized: "Total Wealth") : String(localized: "Total Secured Value"))
-                .font(.labelSM)
+        if isCompact {
+            compactLayout
+        } else {
+            desktopLayout
+        }
+    }
+
+    // MARK: - iOS compact (centered, in a card)
+    @ViewBuilder
+    private var compactLayout: some View {
+        VStack(spacing: 4) {
+            Text(String(localized: "Total Wealth"))
+                .font(.bodyMD)
+                .fontWeight(.medium)
                 .foregroundStyle(Color.onSurfaceVariant)
-                .textCase(.uppercase)
-                .tracking(1)
 
             Text(totalBalance, format: .currency(code: "USD"))
                 .font(.displayLG)
@@ -30,27 +39,40 @@ struct TotalWealthCard: View {
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
 
-            HStack(spacing: 6) {
-                Image(systemName: growthPercentage >= 0 ? "trending_up" : "trending_down")
-                    .font(.labelSM)
-
-                Text("+\(growthPercentage, specifier: "%.1f")% \(String(localized: "this month"))")
-                    .font(.labelSM)
-                    .fontWeight(.medium)
-            }
-            .foregroundStyle(Color.primaryToken)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 6)
-            .background(Color.primaryContainer.opacity(0.2))
-            .clipShape(Capsule())
-
-            Text(String(localized: "Updated 2m ago"))
+            Text("+\(growthPercentage, specifier: "%.1f")% \(String(localized: "this month"))")
                 .font(.labelSM)
-                .foregroundStyle(Color.onSurfaceVariant.opacity(0.6))
+                .foregroundStyle(Color.onSurfaceVariant)
         }
-        .padding(isCompact ? 24 : 32)
+        .padding(24)
         .frame(maxWidth: .infinity)
-        .background(Color.surfaceContainerLow)
-        .clipShape(RoundedRectangle(cornerRadius: DesignConstants.cardCornerRadius))
+    }
+
+    // MARK: - macOS desktop (left-aligned, no card background)
+    @ViewBuilder
+    private var desktopLayout: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(String(localized: "TOTAL SECURED VALUE"))
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundStyle(Color.onSurfaceVariant)
+                .tracking(2)
+
+            HStack(alignment: .firstTextBaseline, spacing: 16) {
+                Text(totalBalance, format: .currency(code: "USD"))
+                    .font(.system(size: 48, weight: .bold, design: .rounded))
+                    .foregroundStyle(Color.onSurface)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+
+                HStack(spacing: 4) {
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 11, weight: .semibold))
+                    Text("\(growthPercentage, specifier: "%.1f")%")
+                        .font(.labelSM)
+                        .fontWeight(.semibold)
+                }
+                .foregroundStyle(Color.primaryToken)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

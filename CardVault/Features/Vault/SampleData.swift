@@ -4,8 +4,22 @@
 //
 
 import Foundation
+import SwiftData
 
 enum SampleData {
+
+    static func seedIfNeeded(modelContext: ModelContext) {
+        let descriptor = FetchDescriptor<CreditCard>()
+        let count = (try? modelContext.fetchCount(descriptor)) ?? 0
+        guard count == 0 else { return }
+
+        for card in cards {
+            modelContext.insert(card)
+        }
+        for event in securityEvents {
+            modelContext.insert(event)
+        }
+    }
     static let cards: [CreditCard] = [
         {
             let card = CreditCard(

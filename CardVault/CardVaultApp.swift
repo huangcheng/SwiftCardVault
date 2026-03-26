@@ -40,6 +40,9 @@ struct CardVaultApp: App {
                 }
             }
             .environment(appState)
+            .onAppear {
+                SampleData.seedIfNeeded(modelContext: sharedModelContainer.mainContext)
+            }
             .onChange(of: scenePhase) { _, newPhase in
                 if newPhase == .background {
                     appState.lock()

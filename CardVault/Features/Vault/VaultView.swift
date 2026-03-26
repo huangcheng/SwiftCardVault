@@ -69,36 +69,45 @@ struct VaultView: View {
     }
     #endif
 
-    // MARK: - macOS Layout
+    // MARK: - macOS Layout (matches Stitch Desktop Dark comp)
 
     #if os(macOS)
     @ViewBuilder
     private var macOSLayout: some View {
-        TotalWealthCard(totalBalance: totalBalance, isCompact: false)
-            .padding(.horizontal, 32)
-
         if cards.isEmpty {
             VaultEmptyStateView()
         } else {
-            LazyVGrid(columns: [
-                GridItem(.flexible(), spacing: 16),
-                GridItem(.flexible(), spacing: 16)
-            ], spacing: 16) {
-                ForEach(cards) { card in
-                    CardStackItem(card: card, isSelected: false)
+            // Row 1: Total value + cards (left ~60%) | Integrity score (right ~40%)
+            HStack(alignment: .top, spacing: 20) {
+                // Left column: value + cards
+                VStack(alignment: .leading, spacing: 20) {
+                    TotalWealthCard(totalBalance: totalBalance, isCompact: false)
+
+                    // Side-by-side cards
+                    HStack(spacing: 16) {
+                        ForEach(cards.prefix(2)) { card in
+                            CardStackItem(card: card, isSelected: false)
+                        }
+                    }
                 }
+                .frame(maxWidth: .infinity)
+
+                // Right column: integrity score + quick actions
+                VaultIntegrityView(cards: cards)
+                    .frame(width: 260)
+            }
+            .padding(.horizontal, 32)
+
+            // Row 2: Vault Stream (left) | Composition + Security (right)
+            HStack(alignment: .top, spacing: 20) {
+                VaultStreamView(events: Array(securityEvents.prefix(5)))
+                    .frame(maxWidth: .infinity)
+
+                VaultCompositionView()
+                    .frame(width: 260)
             }
             .padding(.horizontal, 32)
         }
-
-        HStack(spacing: 16) {
-            VaultIntegrityView(cards: cards)
-            VaultStreamView(events: Array(securityEvents.prefix(10)))
-        }
-        .padding(.horizontal, 32)
-
-        SecurityRadarView(events: Array(securityEvents.prefix(5)))
-            .padding(.horizontal, 32)
     }
     #endif
 }

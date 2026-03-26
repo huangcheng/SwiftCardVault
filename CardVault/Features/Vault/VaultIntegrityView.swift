@@ -27,7 +27,7 @@ struct VaultIntegrityView: View {
     }
 
     private var statusLabel: String {
-        if score >= 90 { return String(localized: "Optimal") }
+        if score >= 90 { return String(localized: "OPTIMAL") }
         if score >= 70 { return String(localized: "Good") }
         return String(localized: "At Risk")
     }
@@ -39,42 +39,53 @@ struct VaultIntegrityView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text(String(localized: "Vault Integrity"))
-                    .font(.headlineSM)
-                    .foregroundStyle(Color.onSurface)
+        VStack(spacing: 20) {
+            // Header
+            Text(String(localized: "VAULT INTEGRITY SCORE"))
+                .font(.labelSM)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.onSurfaceVariant)
+                .tracking(1.5)
 
-                Spacer()
+            // Circular score ring
+            ZStack {
+                Circle()
+                    .stroke(Color.surfaceContainerHigh, lineWidth: 6)
+                    .frame(width: 100, height: 100)
 
-                HStack(spacing: 4) {
-                    Image(systemName: "checkmark.seal.fill")
-                        .foregroundStyle(Color.primaryToken)
-                    Text(String(localized: "Verified"))
-                        .font(.labelSM)
-                        .foregroundStyle(Color.primaryToken)
+                Circle()
+                    .trim(from: 0, to: Double(score) / 100.0)
+                    .stroke(statusColor, style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                    .frame(width: 100, height: 100)
+                    .rotationEffect(.degrees(-90))
+
+                VStack(spacing: 2) {
+                    Text("\(score)")
+                        .font(.system(size: 36, weight: .bold, design: .rounded))
+                        .foregroundStyle(Color.onSurface)
+                    Text(statusLabel)
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(statusColor)
+                        .tracking(1)
                 }
             }
 
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                Text("\(score)")
-                    .font(.system(size: 48, weight: .bold, design: .rounded))
-                    .foregroundStyle(statusColor)
-
-                Text("/ 100 — \(statusLabel)")
-                    .font(.titleMD)
-                    .foregroundStyle(Color.onSurfaceVariant)
-            }
-
-            Text(String(localized: "Your security profile is actively monitored. Biometric and encryption protections are in place."))
-                .font(.bodyMD)
+            // Description
+            Text(String(localized: "Your security profile is stronger than 98% of users. 2-FA and hardware key active."))
+                .font(.labelSM)
                 .foregroundStyle(Color.onSurfaceVariant)
+                .multilineTextAlignment(.center)
+                .lineSpacing(3)
 
-            HStack(spacing: 12) {
-                quickAction(icon: "lock", label: String(localized: "Lock All"))
-                quickAction(icon: "clock", label: String(localized: "History"))
-                quickAction(icon: "checkmark.shield", label: String(localized: "Audit"))
-                quickAction(icon: "link", label: String(localized: "Link"))
+            // 2x2 Quick Actions Grid
+            LazyVGrid(columns: [
+                GridItem(.flexible(), spacing: 10),
+                GridItem(.flexible(), spacing: 10)
+            ], spacing: 10) {
+                quickAction(icon: "lock.fill", label: String(localized: "LOCK VAULT"), tint: Color.errorToken)
+                quickAction(icon: "clock.arrow.circlepath", label: String(localized: "HISTORY"), tint: Color.onSurface)
+                quickAction(icon: "checkmark.shield.fill", label: String(localized: "AUDIT"), tint: Color.primaryToken)
+                quickAction(icon: "link", label: String(localized: "LINK BANK"), tint: Color.onSurface)
             }
         }
         .padding(24)
@@ -83,19 +94,21 @@ struct VaultIntegrityView: View {
     }
 
     @ViewBuilder
-    private func quickAction(icon: String, label: String) -> some View {
+    private func quickAction(icon: String, label: String, tint: Color) -> some View {
         Button {
             // Future implementation
         } label: {
-            VStack(spacing: 6) {
+            VStack(spacing: 8) {
                 Image(systemName: icon)
-                    .font(.body)
+                    .font(.title3)
+                    .foregroundStyle(tint)
                 Text(label)
-                    .font(.labelSM)
+                    .font(.system(size: 8, weight: .semibold))
+                    .foregroundStyle(Color.onSurfaceVariant)
+                    .tracking(1)
             }
-            .foregroundStyle(Color.onSurface)
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
+            .padding(.vertical, 16)
             .background(Color.surfaceContainerHigh)
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
