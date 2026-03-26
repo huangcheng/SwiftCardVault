@@ -53,11 +53,11 @@ struct NetworkSelectorView: View {
         }
     }
 
-    // MARK: - Desktop Icons (from Stitch desktop comp)
+    // MARK: - Desktop Icons
     @ViewBuilder
     private var iconsLayout: some View {
-        HStack(spacing: 12) {
-            ForEach([CardNetwork.visa, .mastercard, .amex, .discover], id: \.self) { network in
+        LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: CardNetwork.allCases.count), spacing: 10) {
+            ForEach(CardNetwork.allCases) { network in
                 Button {
                     selectedNetwork = network
                 } label: {
@@ -70,7 +70,8 @@ struct NetworkSelectorView: View {
                             .foregroundStyle(selectedNetwork == network ? .white : Color.onSurfaceVariant)
                             .tracking(0.5)
                     }
-                    .frame(width: 64, height: 64)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 64)
                     .background(selectedNetwork == network ? Color.primaryToken : Color.surfaceContainerLow)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                 }
