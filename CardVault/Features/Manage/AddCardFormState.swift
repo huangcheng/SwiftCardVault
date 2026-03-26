@@ -42,10 +42,18 @@ final class AddCardFormState {
         }
     }
     var billingDate: Int = 1
-    var paymentDueDate: Int = 10
+    var paymentDueDate: Int = 15
+    var currencyCode: String = "USD"
     var creditLimitText: String = ""
     var cardNumberError: String?
     var detectedNetwork: CardNetwork?
+
+    static let supportedCurrencies = ["USD", "EUR", "GBP", "CNY", "JPY", "CAD", "AUD", "CHF", "HKD", "SGD"]
+
+    var currencySymbol: String {
+        let locale = Locale(identifier: Locale.identifier(fromComponents: [NSLocale.Key.currencyCode.rawValue: currencyCode]))
+        return locale.currencySymbol ?? "$"
+    }
 
     var formattedCardNumber: String {
         let digits = cardNumberRaw

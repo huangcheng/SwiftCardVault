@@ -150,9 +150,9 @@ struct AddCardDesktopView: View {
 
                                     @Bindable var state = formState
                                     Picker("", selection: $state.billingDate) {
-                                        Text(String(localized: "1st of Month")).tag(1)
-                                        Text(String(localized: "15th of Month")).tag(15)
-                                        Text(String(localized: "28th of Month")).tag(28)
+                                        ForEach(1...31, id: \.self) { day in
+                                            Text(ordinalDay(day)).tag(day)
+                                        }
                                     }
                                     .labelsHidden()
                                     .padding(8)
@@ -167,9 +167,9 @@ struct AddCardDesktopView: View {
 
                                     @Bindable var state = formState
                                     Picker("", selection: $state.paymentDueDate) {
-                                        Text(String(localized: "10 Days Later")).tag(10)
-                                        Text(String(localized: "15 Days Later")).tag(15)
-                                        Text(String(localized: "21 Days Later")).tag(21)
+                                        ForEach(1...31, id: \.self) { day in
+                                            Text(ordinalDay(day)).tag(day)
+                                        }
                                     }
                                     .labelsHidden()
                                     .padding(8)
@@ -178,22 +178,41 @@ struct AddCardDesktopView: View {
                                 }
                             }
 
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(String(localized: "Credit Limit"))
-                                    .font(.labelSM)
-                                    .foregroundStyle(Color.onSurfaceVariant)
-
-                                HStack {
-                                    Text("$")
-                                        .font(.bodyMD)
+                            HStack(spacing: 16) {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(String(localized: "Currency"))
+                                        .font(.labelSM)
                                         .foregroundStyle(Color.onSurfaceVariant)
-                                    TextField(String(localized: "5,000"), text: $formState.creditLimitText)
-                                        .font(.bodyMD)
-                                        .foregroundStyle(Color.onSurface)
+
+                                    @Bindable var state = formState
+                                    Picker("", selection: $state.currencyCode) {
+                                        ForEach(AddCardFormState.supportedCurrencies, id: \.self) { code in
+                                            Text(code).tag(code)
+                                        }
+                                    }
+                                    .labelsHidden()
+                                    .padding(8)
+                                    .background(Color.surfaceContainerLow)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
                                 }
-                                .padding(12)
-                                .background(Color.surfaceContainerLow)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(String(localized: "Credit Limit"))
+                                        .font(.labelSM)
+                                        .foregroundStyle(Color.onSurfaceVariant)
+
+                                    HStack {
+                                        Text(formState.currencySymbol)
+                                            .font(.bodyMD)
+                                            .foregroundStyle(Color.onSurfaceVariant)
+                                        TextField(String(localized: "5,000"), text: $formState.creditLimitText)
+                                            .font(.bodyMD)
+                                            .foregroundStyle(Color.onSurface)
+                                    }
+                                    .padding(12)
+                                    .background(Color.surfaceContainerLow)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                }
                             }
                         }
 
@@ -250,7 +269,7 @@ struct AddCardDesktopView: View {
             expirationMonth: formState.expiryMonth,
             expirationYear: formState.expiryYear,
             billingDate: formState.billingDate,
-            paymentDueDate: formState.billingDate + formState.paymentDueDate,
+            paymentDueDate: formState.paymentDueDate,
             creditLimit: formState.creditLimit,
             currentBalance: 0,
             cardColor: cardColorForNetwork(formState.selectedNetwork)
@@ -268,6 +287,12 @@ struct AddCardDesktopView: View {
         modelContext.insert(event)
 
         isPresented = false
+    }
+
+    nonisolated private func ordinalDay(_ day: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .ordinal
+        return formatter.string(from: NSNumber(value: day)) ?? "\(day)"
     }
 
     nonisolated private func cardColorForNetwork(_ network: CardNetwork) -> String {
