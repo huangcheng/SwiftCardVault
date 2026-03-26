@@ -63,10 +63,53 @@ struct CardStackItem: View {
         .frame(maxWidth: .infinity)
         .frame(height: 220)
         .background(cardGradient)
+        .overlay(alignment: .bottomTrailing) {
+            networkLogo
+                .padding(20)
+        }
         .cardShape()
         .offset(y: isSelected ? -DesignConstants.cardTranslateDistance : 0)
         .animation(DesignConstants.cardTouchSpring, value: isSelected)
         .onTapGesture { onTap() }
+    }
+
+    @ViewBuilder
+    private var networkLogo: some View {
+        switch card.cardNetwork {
+        case .mastercard:
+            // Two overlapping circles
+            HStack(spacing: -12) {
+                Circle()
+                    .fill(Color.white.opacity(0.4))
+                    .frame(width: 32, height: 32)
+                Circle()
+                    .fill(Color.white.opacity(0.3))
+                    .frame(width: 32, height: 32)
+            }
+        case .visa:
+            Text("VISA")
+                .font(.system(size: 20, weight: .bold, design: .serif))
+                .italic()
+                .foregroundStyle(Color.white.opacity(0.7))
+        case .amex:
+            Text("AMEX")
+                .font(.system(size: 16, weight: .heavy))
+                .foregroundStyle(Color.white.opacity(0.7))
+                .tracking(2)
+        case .unionpay:
+            Text("UnionPay")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(Color.white.opacity(0.7))
+        case .jcb:
+            Text("JCB")
+                .font(.system(size: 18, weight: .bold))
+                .foregroundStyle(Color.white.opacity(0.7))
+        case .discover:
+            Text("DISCOVER")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(Color.white.opacity(0.7))
+                .tracking(1)
+        }
     }
 
     private var cardGradient: some ShapeStyle {
