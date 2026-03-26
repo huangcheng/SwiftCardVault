@@ -6,9 +6,11 @@
 import SwiftUI
 
 struct AddCardTile: View {
+    var onTap: () -> Void = {}
+
     var body: some View {
         Button {
-            // Navigate to add card — future implementation
+            onTap()
         } label: {
             VStack(spacing: 14) {
                 ZStack {
@@ -44,7 +46,7 @@ struct AddCardTile: View {
 
 #Preview {
     AddCardTile()
-        .frame(width: 280, height: 200)
+        .frame(width: 280, height: 220)
         .padding()
         .background(Color.surface)
 }

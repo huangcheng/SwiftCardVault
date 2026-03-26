@@ -10,6 +10,7 @@ struct VaultView: View {
     @Query(sort: \CreditCard.displayOrder) private var cards: [CreditCard]
     @Query(sort: \SecurityEvent.timestamp, order: .reverse) private var securityEvents: [SecurityEvent]
     @State private var selectedCardIndex: Int?
+    @State private var showingAddCard = false
 
     private var totalBalance: Decimal {
         cards.compactMap(\.currentBalance).reduce(0, +)
@@ -28,6 +29,11 @@ struct VaultView: View {
         }
         .background(Color.surface)
         .scrollClipDisabled()
+        #if os(iOS)
+        .sheet(isPresented: $showingAddCard) {
+            AddCardSheetView()
+        }
+        #endif
     }
 
     // MARK: - iOS Layout
@@ -41,7 +47,9 @@ struct VaultView: View {
             .padding(.horizontal, 20)
 
         if cards.isEmpty {
-            VaultEmptyStateView()
+            VaultEmptyStateView {
+                showingAddCard = true
+            }
         } else {
             cardStack
                 .padding(.horizontal, 20)
@@ -74,8 +82,12 @@ struct VaultView: View {
     #if os(macOS)
     @ViewBuilder
     private var macOSLayout: some View {
-        if cards.isEmpty {
-            VaultEmptyStateView()
+        if showingAddCard {
+            AddCardDesktopView(isPresented: $showingAddCard)
+        } else if cards.isEmpty {
+            VaultEmptyStateView {
+                showingAddCard = true
+            }
         } else {
             // Row 1: "Digital Assets" heading (left) | Total value pill (right)
             TotalWealthCard(totalBalance: totalBalance, isCompact: false)
@@ -104,7 +116,9 @@ struct VaultView: View {
                     ForEach(cards.prefix(2)) { card in
                         CardStackItem(card: card, isSelected: false)
                     }
-                    AddCardTile()
+                    AddCardTile {
+                        showingAddCard = true
+                    }
                 }
             }
             .padding(.horizontal, 32)

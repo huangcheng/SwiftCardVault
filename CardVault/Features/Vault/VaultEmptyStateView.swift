@@ -6,6 +6,8 @@
 import SwiftUI
 
 struct VaultEmptyStateView: View {
+    var onAddCard: () -> Void = {}
+
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
@@ -26,7 +28,7 @@ struct VaultEmptyStateView: View {
             }
 
             Button {
-                // Navigate to add card — future implementation
+                onAddCard()
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "plus")
